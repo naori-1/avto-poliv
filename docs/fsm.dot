@@ -1,0 +1,18 @@
+digraph FSM {
+  rankdir=LR;
+  bgcolor="white";
+  node [shape=circle, style=filled, fontname="DejaVu Sans", fontsize=13, width=1.7, fixedsize=true];
+  edge [fontname="DejaVu Sans", fontsize=11];
+
+  start [shape=point, width=0.15, fillcolor=black];
+  VLAZHNO [label="ВЛАЖНО\n\nзелёный LED\nпомпа выкл", fillcolor="#c8f0c8"];
+  SUKHO   [label="СУХО\n\nкрасный LED\nпомпа выкл", fillcolor="#f6c6c6"];
+  POLIV   [label="ПОЛИВ\n\nсиний LED\nпомпа ВКЛ", fillcolor="#c6d8f6"];
+
+  start -> VLAZHNO [label="старт"];
+  VLAZHNO -> SUKHO [label="влажность < 30 %"];
+  SUKHO -> POLIV [label="сухо 3 с подряд\nи прошла пауза 30 с"];
+  POLIV -> VLAZHNO [label="влажность > 60 %"];
+  POLIV -> SUKHO [label="помпа работала 15 с,\nа почва не намокла"];
+  SUKHO -> VLAZHNO [label="влажность > 60 %\n(полили вручную)"];
+}
